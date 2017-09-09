@@ -42,7 +42,10 @@ void editNodeList(std::vector<Node*>& nodes)
 	nodes[indexTwo] = temp;
 }
 
+
 void printNodeSequence(std::vector<Node*>& nodes)
+//Prints contents of list of nodes
+//The printing uses the nodes name
 {
 	if (nodes.size() < 1)
 		return;
@@ -66,8 +69,8 @@ float getTotalDistance(std::vector<Node*>& nodeList)
 
 	float totalDistance = 0;
 
-	for (size_t i = 1; i < nodeList.size(); i++)	//Use lookup table and add to get total distance
-	{
+	for (size_t i = 1; i < nodeList.size(); i++)	//Use distance lookup table and accumulate total distance
+	{												//Use ID of nodes for index in look up table
 		totalDistance += distLookUpTable[nodeList[i - 1]->_ID][nodeList[i]->_ID];
 	}
 
@@ -134,8 +137,8 @@ int main()
 		else //No improvement in performance, may take path
 		{
 			double randVal = (double)rand() / RAND_MAX;
-			double expVal = exp(-1 * changeInDistance / tempreture);
-			if (randVal > expVal)
+			double expVal = exp(-1 * (changeInDistance / tempreture));
+			if (randVal < expVal)
 			{
 				vecNodes = vecNewPath;
 				previousDistance = newDistance;
@@ -143,7 +146,7 @@ int main()
 
 			
 		}
-
+		/*
 		//==== Section prints results this step
 		std::cout << std::endl;
 		std::cout << "Current Tempreture: " << tempreture << std::endl;
@@ -152,14 +155,14 @@ int main()
 		printNodeSequence(vecNodes);
 		std::cout << std::endl;
 		//====
-
+		*/
 		tempreture -= tempDropPerStep;
 	}
 	
 	std::cout << std::endl << "Final Path: "; 
 	printNodeSequence(vecNodes);
 
-	std::cout << std::endl << "Total Distance: " << previousDistance << std::endl;
+	std::cout << std::endl << "Final Distance: " << previousDistance << std::endl;
 
 
 	//Finished algorthm, delete nodes
